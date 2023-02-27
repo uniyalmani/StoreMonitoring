@@ -1,10 +1,10 @@
 # StoreMonitoring
 #command to run docker-compose up
 tech stack used 
-1) ***FastApi
-2) ***sqlmodel(orm)
-3) ***docker, docker-compose for containerization
-4) ***kafka  (to run bakground task  )
+1) ** FastApi***
+2) ***sqlmodel(orm)***
+3) ***docker, docker-compose*** for containerization
+4) ***kafka *** (to run bakground task  )
 
 **basic algo for extrapolate uptime and downtime **
 * algo is based on averaging 
