@@ -14,7 +14,7 @@ tech stack used
 
 *end points - > 
 1) ***http://0.0.0.0:8000/trigger_report***
-2) ***http://0.0.0.0:8000/get_report?report_id=**
+2) ***http://0.0.0.0:8000/get_report?report_id=c1d0fafc-5ab8-4fd9-9b1b-4ab7ede35973***
 
 
 **basic algo for extrapolate uptime and downtime **
