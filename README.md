@@ -1,13 +1,18 @@
 # StoreMonitoring
 #command to run docker-compose up
 tech stack used 
-1) ** FastApi***
+1) ***FastApi***
 2) ***sqlmodel(orm)***
 3) ***docker, docker-compose*** for containerization
 4) ***kafka *** (to run bakground task  )
 
+*end points - > 
+1) ***http://0.0.0.0:8000/trigger_report***
+2) ***http://0.0.0.0:8000/get_report?report_id=**
+
+
 **basic algo for extrapolate uptime and downtime **
-* algo is based on averaging 
+# algo is based on averaging 
 ```
 {
 we find total active count and inactve count in an interval,
