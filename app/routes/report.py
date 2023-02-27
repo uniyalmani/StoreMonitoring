@@ -26,7 +26,7 @@ bucket_name = env.get("BUCKET_NAME")
         description="**genrate report**")
 def trigger_report():
     report_info = Report()
-    given_date = "2023-01-30 12:09:39.388884 UTC"
+    given_date = "2023-01-22 12:09:39.388884 UTC"
 
     last_week_data = report_info.get_prev_week_data(given_date)
 
