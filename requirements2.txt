@@ -1,0 +1,4 @@
+kafka-python
+sqlmodel
+boto3
+mysqlclient

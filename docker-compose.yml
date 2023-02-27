@@ -1,0 +1,104 @@
+version: '3.9'
+
+services:
+  mysql_db:
+    image: mysql:latest
+    container_name: mysql_db
+    hostname: mysql_db
+    environment:
+      - MYSQL_ROOT_HOST="%"
+      - MYSQL_ROOT_PASSWORD=fynd123
+      - MYSQL_DATABASE=fynd_acad
+      - MYSQL_USER=fynd_acad
+      - MYSQL_PASSWORD=fynd123 
+    ports:
+      - "3305:3306"
+    volumes:
+      - /home/nitin/fynd_acad/docker-data/auction/a8:/var/lib/mysql 
+    
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - 9092:9092
+    expose:
+      - 29092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+    restart: always
+    # mem_reservation: 2g
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+ 
+    environment:
+      - TOPIC_NAME=csvdata
+      - S3_ACCESS_KEY_ID=AKIA55RUG4ZW3CVW3YEO
+      - S3_AWS_SECRET_ACCESS_KEY=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
+      - BUCKET_NAME=csvbucketloop
+      - ALGORITHM="HS256"
+      - MYSQL_ROOT_HOST=mysql_db
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=fynd123
+      - MYSQL_DATABASE=fynd_acad
+      - MYSQL_USER=fynd_acad
+      - MYSQL_PASSWORD=fynd123
+
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - mysql_db
+      - kafka
+    ports:  
+      - "8000:8000"
+    restart: always
+
+  consumer:
+    container_name: consumer
+    build:
+      context: .
+      dockerfile: Dockerfile1
+ 
+    environment:
+      - TOPIC_NAME=csvdata
+      - S3_ACCESS_KEY_ID=AKIA55RUG4ZW3CVW3YEO
+      - S3_AWS_SECRET_ACCESS_KEY=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
+      - BUCKET_NAME=csvbucketloop
+    # mem_reservation: 2g
+
+    volumes:
+      - .:/usr/src/app/consumer
+    depends_on:
+      - kafka
+      - mysql_db
+      - app
+    restart: always
+    # ports:  
+    #   - "8001:8000"
+
+
+    
+
+

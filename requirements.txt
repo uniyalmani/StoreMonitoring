@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sqlmodel
+mysqlclient
+kafka-python
+boto3
