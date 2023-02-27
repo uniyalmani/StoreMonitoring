@@ -1,5 +1,11 @@
 # StoreMonitoring
 #command to run docker-compose up
+#requirement       
+1) TOPIC_NAME
+2)`S3_ACCESS_KEY_ID
+3) S3_AWS_SECRET_ACCESS_KEY
+4) BUCKET_NAME
+
 tech stack used 
 1) ***FastApi***
 2) ***sqlmodel(orm)***
